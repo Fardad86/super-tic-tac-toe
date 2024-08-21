@@ -32,7 +32,7 @@ h1 {
     grid-gap: 10px;
     justify-content: center;
     margin-bottom: 20px;
-    max-width: 500px; /* Ensure board doesn't exceed max-width */
+    max-width: 600px; /* Increase board width */
     margin: 0 auto; /* Center the board horizontally */
 }
 
@@ -43,8 +43,10 @@ h1 {
     grid-gap: 2px;
     border: 3px solid #1abc9c;
     box-sizing: border-box;
-    width: 80px; /* Fixed width for mini-boards */
-    height: 80px; /* Fixed height for mini-boards */
+    width: 100px; /* Fixed width for mini-boards */
+    height: 100px; /* Fixed height for mini-boards */
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .mini-board.won {
@@ -61,13 +63,28 @@ h1 {
     font-size: 1.2rem;
     color: #2c3e50;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
     box-sizing: border-box;
 }
 
 .cell:hover {
     background-color: #16a085;
-    transform: scale(1.1);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Glow effect on hover */
+}
+
+.cell.x::before {
+    content: 'X';
+    font-size: 2rem; /* Fixed size for X */
+    color: #ecf0f1;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Glow effect */
+}
+
+.cell.o::before {
+    content: 'O';
+    font-size: 2rem; /* Fixed size for O */
+    color: #ecf0f1;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Glow effect */
 }
 
 #reset {
@@ -94,8 +111,8 @@ h1 {
     }
 
     .mini-board {
-        width: 60px; /* Adjust mini-board size for smaller screens */
-        height: 60px;
+        width: 80px; /* Adjust mini-board size for smaller screens */
+        height: 80px;
     }
 
     .cell {
@@ -114,8 +131,8 @@ h1 {
     }
 
     .mini-board {
-        width: 50px; /* Adjust mini-board size for very small screens */
-        height: 50px;
+        width: 60px; /* Adjust mini-board size for very small screens */
+        height: 60px;
     }
 
     .cell {
