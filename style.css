@@ -13,8 +13,8 @@ body {
 
 .container {
     text-align: center;
-    max-width: 90vw; /* Ensure container fits within viewport width */
-    max-height: 90vh; /* Ensure container fits within viewport height */
+    max-width: 95vw; /* Increase container width */
+    max-height: 95vh; /* Increase container height */
     overflow: auto; /* Enable scrolling within container if needed */
     padding: 20px; /* Add padding to avoid content sticking to edges */
     box-sizing: border-box;
@@ -32,7 +32,7 @@ h1 {
     grid-gap: 10px;
     justify-content: center;
     margin-bottom: 20px;
-    max-width: 600px; /* Increase board width */
+    max-width: 700px; /* Increase board width */
     margin: 0 auto; /* Center the board horizontally */
 }
 
@@ -43,14 +43,19 @@ h1 {
     grid-gap: 2px;
     border: 3px solid #1abc9c;
     box-sizing: border-box;
-    width: 100px; /* Fixed width for mini-boards */
-    height: 100px; /* Fixed height for mini-boards */
+    width: 120px; /* Fixed width for mini-boards */
+    height: 120px; /* Fixed height for mini-boards */
     max-width: 100%;
     max-height: 100%;
+    transition: box-shadow 0.3s;
 }
 
 .mini-board.won {
     border-color: #e74c3c; /* Change border color to indicate win */
+}
+
+.mini-board.highlight {
+    box-shadow: 0 0 10px rgba(26, 188, 156, 0.7); /* Glow effect for highlighted mini-boards */
 }
 
 .cell {
@@ -60,7 +65,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2rem; /* Increase font size for better visibility */
+    font-size: 1.5rem; /* Smaller font size for X and O */
     color: #2c3e50;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
@@ -70,21 +75,21 @@ h1 {
 .cell:hover {
     background-color: #16a085;
     transform: scale(1.05);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Glow effect on hover */
+    box-shadow: 0 0 10px rgba(26, 188, 156, 0.7); /* Glow effect on hover */
 }
 
 .cell.x::before {
     content: 'X';
-    font-size: 2rem; /* Fixed size for X */
+    font-size: 1.5rem; /* Fixed size for X */
     color: #ecf0f1;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Glow effect */
+    text-shadow: 0 0 8px rgba(26, 188, 156, 0.7); /* Glow effect */
 }
 
 .cell.o::before {
     content: 'O';
-    font-size: 2rem; /* Fixed size for O */
+    font-size: 1.5rem; /* Fixed size for O */
     color: #ecf0f1;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Glow effect */
+    text-shadow: 0 0 8px rgba(26, 188, 156, 0.7); /* Glow effect */
 }
 
 #reset {
@@ -111,12 +116,12 @@ h1 {
     }
 
     .mini-board {
-        width: 80px; /* Adjust mini-board size for smaller screens */
-        height: 80px;
+        width: 90px; /* Adjust mini-board size for smaller screens */
+        height: 90px;
     }
 
     .cell {
-        font-size: 1.5rem; /* Adjust font size for smaller screens */
+        font-size: 1.2rem; /* Adjust font size for smaller screens */
     }
 
     #reset {
@@ -131,12 +136,12 @@ h1 {
     }
 
     .mini-board {
-        width: 60px; /* Adjust mini-board size for very small screens */
-        height: 60px;
+        width: 70px; /* Adjust mini-board size for very small screens */
+        height: 70px;
     }
 
     .cell {
-        font-size: 1.2rem; /* Adjust font size for very small screens */
+        font-size: 1rem; /* Adjust font size for very small screens */
     }
 
     #reset {
