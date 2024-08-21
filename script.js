@@ -1,85 +1,75 @@
 // script.js
-const boards = document.querySelectorAll('.mini-board');
+
+const board = document.getElementById('board');
 const resetButton = document.getElementById('reset');
-let currentPlayer = 'X';
-let gameState = Array(9).fill(null).map(() => Array(9).fill(null));
-let mainBoardState = Array(9).fill(null);
-let activeBoardIndex = null;
+let currentPlayer = 'x';
+let boardState = Array(9).fill(null);
 
-// Function to check win condition for a mini-board
-function checkWin(board) {
-    const winningCombinations = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-        [0, 4, 8], [2, 4, 6]             // Diagonals
-    ];
-
-    return winningCombinations.some(combination => {
-        const [a, b, c] = combination;
-        return board[a] && board[a] === board[b] && board[a] === board[c];
-    });
+// Initialize the game board
+function createBoard() {
+    board.innerHTML = '';
+    for (let i = 0; i < 9; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        cell.dataset.index = i;
+        cell.addEventListener('click', handleCellClick);
+        board.appendChild(cell);
+    }
 }
 
-// Function to handle a move
+// Handle cell click
 function handleCellClick(e) {
     const cell = e.target;
-    const boardIndex = parseInt(cell.parentElement.getAttribute('data-board-index'));
-    const cellIndex = parseInt(cell.getAttribute('data-cell-index'));
+    const index = cell.dataset.index;
 
-    if (activeBoardIndex !== null && activeBoardIndex !== boardIndex) return; // Enforce board restriction
-    if (gameState[boardIndex][cellIndex] !== null) return; // Cell already taken
+    if (boardState[index] || checkWinner()) return;
 
-    gameState[boardIndex][cellIndex] = currentPlayer;
-    cell.textContent = currentPlayer;
-
-    // Check if the current mini-board has a winner
-    if (checkWin(gameState[boardIndex])) {
-        boards[boardIndex].classList.add('won');
-        mainBoardState[boardIndex] = currentPlayer;
-        // Check if the main board has a winner
-        if (checkWin(mainBoardState)) {
-            setTimeout(() => alert(`${currentPlayer} wins the game!`), 100);
-            resetGame();
-            return;
-        }
+    boardState[index] = currentPlayer;
+    cell.classList.add(currentPlayer);
+    updateBoard();
+    if (checkWinner()) {
+        highlightWinningCombination();
+        return;
     }
-
-    // Check if there are any empty cells left in the active mini-board
-    const anyEmptyCells = gameState[boardIndex].some(cell => cell === null);
-    if (!anyEmptyCells) {
-        mainBoardState[boardIndex] = 'T'; // Mark the mini-board as a tie
-        if (checkWin(mainBoardState)) {
-            setTimeout(() => alert('The game is a tie!'), 100);
-            resetGame();
-            return;
-        }
-    }
-
-    // Update the active board index
-    activeBoardIndex = anyEmptyCells ? cellIndex : null;
-    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    currentPlayer = currentPlayer === 'x' ? 'o' : 'x';
 }
 
-// Function to reset the game
-function resetGame() {
-    gameState = Array(9).fill(null).map(() => Array(9).fill(null));
-    mainBoardState = Array(9).fill(null);
-    boards.forEach(board => {
-        board.classList.remove('won');
-        board.querySelectorAll('.cell').forEach(cell => {
-            cell.textContent = '';
-        });
+// Update board display
+function updateBoard() {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach((cell, index) => {
+        if (boardState[index]) {
+            cell.classList.add(boardState[index]);
+        } else {
+            cell.classList.remove('x', 'o');
+        }
     });
-    currentPlayer = 'X';
-    activeBoardIndex = null;
 }
 
-// Add event listeners
-boards.forEach((board, boardIndex) => {
-    board.setAttribute('data-board-index', boardIndex);
-    board.querySelectorAll('.cell').forEach((cell, cellIndex) => {
-        cell.setAttribute('data-cell-index', cellIndex);
-        cell.addEventListener('click', handleCellClick);
+// Highlight winning mini-boards
+function highlightWinningCombination() {
+    // Logic to highlight winning mini-boards
+}
+
+// Check for a winner
+function checkWinner() {
+    const winPatterns = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+        [0, 4, 8], [2, 4, 6] // Diagonals
+    ];
+    return winPatterns.some(pattern => {
+        const [a, b, c] = pattern;
+        return boardState[a] && boardState[a] === boardState[b] && boardState[a] === boardState[c];
     });
+}
+
+// Reset the game
+resetButton.addEventListener('click', () => {
+    boardState = Array(9).fill(null);
+    currentPlayer = 'x';
+    updateBoard();
+    createBoard();
 });
-resetButton.addEventListener('click', resetGame);
+
+createBoard();
