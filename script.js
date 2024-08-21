@@ -79,3 +79,4 @@ boards.forEach(board => {
     board.addEventListener('click', handleCellClick);
 });
 resetButton.addEventListener('click', resetGame);
+ 
