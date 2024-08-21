@@ -32,39 +32,17 @@ h1 {
     grid-gap: 10px;
     justify-content: center;
     margin-bottom: 20px;
-    max-width: 700px; /* Increase board width */
-    margin: 0 auto; /* Center the board horizontally */
-}
-
-.mini-board {
-    background-color: #34495e;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 2px;
-    border: 3px solid #1abc9c;
-    box-sizing: border-box;
-    width: 120px; /* Fixed width for mini-boards */
-    height: 120px; /* Fixed height for mini-boards */
-    max-width: 100%;
-    max-height: 100%;
-    transition: box-shadow 0.3s;
-}
-
-.mini-board.won {
-    border-color: #e74c3c; /* Change border color to indicate win */
-}
-
-.mini-board.highlight {
-    box-shadow: 0 0 10px rgba(26, 188, 156, 0.7); /* Glow effect for highlighted mini-boards */
+    width: 360px; /* Fixed width for the board */
+    height: 360px; /* Fixed height for the board */
 }
 
 .cell {
     background-color: #1abc9c;
-    width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 100%;
     font-size: 2rem; /* Font size for X and O */
     color: #2c3e50;
     cursor: pointer;
@@ -112,12 +90,8 @@ h1 {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .board {
-        max-width: 90vw; /* Adjust board width for smaller screens */
-    }
-
-    .mini-board {
-        width: 90px; /* Adjust mini-board size for smaller screens */
-        height: 90px;
+        width: 270px; /* Adjust board width for smaller screens */
+        height: 270px; /* Adjust board height for smaller screens */
     }
 
     .cell {
@@ -132,12 +106,8 @@ h1 {
 
 @media (max-width: 480px) {
     .board {
-        max-width: 95vw; /* Adjust board width for very small screens */
-    }
-
-    .mini-board {
-        width: 70px; /* Adjust mini-board size for very small screens */
-        height: 70px;
+        width: 200px; /* Adjust board width for very small screens */
+        height: 200px; /* Adjust board height for very small screens */
     }
 
     .cell {
