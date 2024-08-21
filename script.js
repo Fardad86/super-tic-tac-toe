@@ -13,7 +13,7 @@ function checkWin(board) {
         [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
         [0, 4, 8], [2, 4, 6]             // Diagonals
     ];
-    
+
     return winningCombinations.some(combination => {
         const [a, b, c] = combination;
         return board[a] && board[a] === board[b] && board[a] === board[c];
@@ -75,8 +75,11 @@ function resetGame() {
 }
 
 // Add event listeners
-boards.forEach(board => {
-    board.addEventListener('click', handleCellClick);
+boards.forEach((board, boardIndex) => {
+    board.setAttribute('data-board-index', boardIndex);
+    board.querySelectorAll('.cell').forEach((cell, cellIndex) => {
+        cell.setAttribute('data-cell-index', cellIndex);
+        cell.addEventListener('click', handleCellClick);
+    });
 });
 resetButton.addEventListener('click', resetGame);
- 
