@@ -3,8 +3,8 @@ const boards = document.querySelectorAll('.mini-board');
 const resetButton = document.getElementById('reset');
 let currentPlayer = 'X';
 let gameState = Array(9).fill(null).map(() => Array(9).fill(null));
+let mainBoardState = Array(9).fill(null);
 let activeBoardIndex = null;
-let mainBoardState = Array(9).fill(null); // Track the state of the main board
 
 // Function to check win condition for a mini-board
 function checkWin(board) {
@@ -32,17 +32,31 @@ function handleCellClick(e) {
     gameState[boardIndex][cellIndex] = currentPlayer;
     cell.textContent = currentPlayer;
 
+    // Check if the current mini-board has a winner
     if (checkWin(gameState[boardIndex])) {
         boards[boardIndex].classList.add('won');
         mainBoardState[boardIndex] = currentPlayer;
+        // Check if the main board has a winner
         if (checkWin(mainBoardState)) {
-            alert(`${currentPlayer} wins the game!`);
+            setTimeout(() => alert(`${currentPlayer} wins the game!`), 100);
             resetGame();
             return;
         }
     }
 
-    activeBoardIndex = gameState[boardIndex][cellIndex] === null ? cellIndex : null;
+    // Check if there are any empty cells left in the active mini-board
+    const anyEmptyCells = gameState[boardIndex].some(cell => cell === null);
+    if (!anyEmptyCells) {
+        mainBoardState[boardIndex] = 'T'; // Mark the mini-board as a tie
+        if (checkWin(mainBoardState)) {
+            setTimeout(() => alert('The game is a tie!'), 100);
+            resetGame();
+            return;
+        }
+    }
+
+    // Update the active board index
+    activeBoardIndex = anyEmptyCells ? cellIndex : null;
     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
 }
 
