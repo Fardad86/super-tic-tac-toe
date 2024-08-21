@@ -1,67 +1,77 @@
-// script.js
-const boards = document.querySelectorAll('.mini-board');
-const resetButton = document.getElementById('reset');
-let currentPlayer = 'X';
-let gameState = Array(9).fill(null).map(() => Array(9).fill(null));
-let activeBoardIndex = null;
-let mainBoardState = Array(9).fill(null); // Track the state of the main board
-
-// Function to check win condition for a mini-board
-function checkWin(board) {
-    const winningCombinations = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-        [0, 4, 8], [2, 4, 6]             // Diagonals
-    ];
-    
-    return winningCombinations.some(combination => {
-        const [a, b, c] = combination;
-        return board[a] && board[a] === board[b] && board[a] === board[c];
-    });
+/* style.css */
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #2c3e50;
+    margin: 0;
+    color: #ecf0f1;
+    overflow: hidden;
 }
 
-// Function to handle a move
-function handleCellClick(e) {
-    const cell = e.target;
-    const boardIndex = parseInt(cell.parentElement.getAttribute('data-board-index'));
-    const cellIndex = parseInt(cell.getAttribute('data-cell-index'));
-
-    if (activeBoardIndex !== null && activeBoardIndex !== boardIndex) return; // Enforce board restriction
-    if (gameState[boardIndex][cellIndex] !== null) return; // Cell already taken
-
-    gameState[boardIndex][cellIndex] = currentPlayer;
-    cell.textContent = currentPlayer;
-
-    if (checkWin(gameState[boardIndex])) {
-        boards[boardIndex].classList.add('won');
-        mainBoardState[boardIndex] = currentPlayer;
-        if (checkWin(mainBoardState)) {
-            alert(`${currentPlayer} wins the game!`);
-            resetGame();
-            return;
-        }
-    }
-
-    activeBoardIndex = gameState[boardIndex][cellIndex] === null ? cellIndex : null;
-    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+.container {
+    text-align: center;
 }
 
-// Function to reset the game
-function resetGame() {
-    gameState = Array(9).fill(null).map(() => Array(9).fill(null));
-    mainBoardState = Array(9).fill(null);
-    boards.forEach(board => {
-        board.classList.remove('won');
-        board.querySelectorAll('.cell').forEach(cell => {
-            cell.textContent = '';
-        });
-    });
-    currentPlayer = 'X';
-    activeBoardIndex = null;
+h1 {
+    font-size: 3rem;
+    margin-bottom: 30px;
+    color: #ecf0f1;
 }
 
-// Add event listeners
-boards.forEach(board => {
-    board.addEventListener('click', handleCellClick);
-});
-resetButton.addEventListener('click', resetGame);
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+    margin-bottom: 20px;
+}
+
+.mini-board {
+    background-color: #34495e;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    border: 4px solid #1abc9c;
+    transition: box-shadow 0.5s;
+}
+
+.mini-board:hover {
+    box-shadow: 0 0 15px 5px #1abc9c;
+}
+
+.cell {
+    background-color: #1abc9c;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: #2c3e50;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.cell:hover {
+    background-color: #16a085;
+    transform: scale(1.1);
+}
+
+#reset {
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    background-color: #e74c3c;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#reset:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
